@@ -25,5 +25,27 @@ app.post('/addUser', function (req, res) {
         res.end( JSON.stringify(data));
     });
 })
+app.get('/:id', function (req, res) {
+    // First read existing users.
+    fs.readFile( __dirname + "/" + "users.json", 'utf8', function (err, data) {
+        var users = JSON.parse( data );
+        var user = users["user" + req.params.id];
+        console.log( user );
+        res.end( JSON.stringify(user));
+    });
+});
+var id = 2;
+
+app.delete('/deleteUser', function (req, res) {
+
+    // First read existing users.
+    fs.readFile( __dirname + "/" + "users.json", 'utf8', function (err, data) {
+        data = JSON.parse( data );
+        delete data["user" + 2];
+
+        console.log( data );
+        res.end( JSON.stringify(data));
+    });
+});
 app.listen(3000);
 console.log('server started');
